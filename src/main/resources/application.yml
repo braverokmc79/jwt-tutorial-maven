@@ -42,8 +42,16 @@ logging:
   level:
     '[me.slivernine]': DEBUG
     
-    
-         
+
+            
+jwt:
+  header: Authorization
+  secret : c2laserfetesatesfsaertjksehtjekhkjnjterXERSETESRFfskejhteale324239u80vcasere@$@#$
+  token-validity-in-seconds: 86400
+  
+
+
+
      
      
      
