@@ -43,6 +43,9 @@ public class JwtFilter extends GenericFilterBean{
 		String jwt =resolveToken(httpServletRequest);
 		String requestURI=httpServletRequest.getRequestURI();
 		
+		log.debug("jwt: {} " , jwt);
+		log.debug("requestURI: {} " , requestURI);
+		
 		if(StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)){
 			Authentication authentication=tokenProvider.getAuthentication(jwt);
 			//시큐리티 세션에 저장

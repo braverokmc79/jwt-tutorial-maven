@@ -22,6 +22,7 @@ import me.slivernine.tutorial.jwt.TokenProvider;
 
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true) //메소드 단위로 사용하기 위해 추가
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
@@ -29,19 +30,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 	
-	public SecurityConfig(
-			TokenProvider tokenProvider,
-			JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-			JwtAccessDeniedHandler jwtAccessDeniedHandler
-			) {
-		this.tokenProvider=tokenProvider;
-		this.jwtAuthenticationEntryPoint=jwtAuthenticationEntryPoint;
-		this.jwtAccessDeniedHandler=jwtAccessDeniedHandler;
-	}
+//	public SecurityConfig(
+//			TokenProvider tokenProvider,
+//			JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
+//			JwtAccessDeniedHandler jwtAccessDeniedHandler
+//			) {
+//		this.tokenProvider=tokenProvider;
+//		this.jwtAuthenticationEntryPoint=jwtAuthenticationEntryPoint;
+//		this.jwtAccessDeniedHandler=jwtAccessDeniedHandler;
+//	}
 	
 	
 	@Bean
-	public PasswordEncoder passwordEncoder(){
+	public BCryptPasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
 	}
 	
@@ -63,6 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.authorizeRequests()
 			.antMatchers("/h2-console/**").permitAll()
 			.antMatchers("/api/hello").permitAll()
+			.antMatchers("/api/join").permitAll()
 			.antMatchers("/api/authenticate").permitAll()
 			.antMatchers("/api/signup").permitAll()			
 			.anyRequest().authenticated()

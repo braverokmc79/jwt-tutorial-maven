@@ -46,7 +46,7 @@ logging:
             
 jwt:
   header: Authorization
-  secret : c2laserfetesatesfsaertjksehtjekhkjnjterXERSETESRFfskejhteale324239u80vcasere@$@#$
+  secret : c2laserfetesatesfsaertjksehtjekhkjnjterXERSETESRFfskejhteale324239u80vcasereekhkjnjterXERSETESRFfskejhteale3242
   token-validity-in-seconds: 86400
   
 

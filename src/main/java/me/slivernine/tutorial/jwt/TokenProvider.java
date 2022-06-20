@@ -1,6 +1,5 @@
 package me.slivernine.tutorial.jwt;
 
-import java.nio.charset.MalformedInputException;
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
@@ -75,12 +74,12 @@ public class TokenProvider implements InitializingBean{
 		long now =(new Date()).getTime();
 		Date validity =new Date(now + this.tokenValidityInMilliseconds);
 		
-		return Jwts.builder()
-				.setSubject(authentication.getName())
-				.claim("AUTHORITIES_KEY", authentication)
-				.signWith(key, SignatureAlgorithm.HS512)
-				.setExpiration(validity)
-				.compact();		
+		 return Jwts.builder()
+		         .setSubject(authentication.getName())
+		         .claim(AUTHORITIES_KEY, authorities)
+		         .signWith(key, SignatureAlgorithm.HS512)
+		         .setExpiration(validity)
+		         .compact();	
 	}
 	
 	
