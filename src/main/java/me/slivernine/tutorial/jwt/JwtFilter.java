@@ -35,7 +35,7 @@ public class JwtFilter extends GenericFilterBean{
 	}
 	
 	
-	//doFilter 는 토큰의 인증정보를 SecurityContext 에 저장하는 역할 수행
+	/** doFilter 는 토큰의 인증정보를 SecurityContext 에 저장하는 역할 수행 */
 	@Override	
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
 			throws IOException, ServletException {
@@ -59,7 +59,7 @@ public class JwtFilter extends GenericFilterBean{
 	}
 
 	
-	//Request Header 에서 토큰 정보를 꺼내기위한 resolveToken 메소드 추가
+	/** Request Header 에서 토큰 정보를 꺼내기위한 resolveToken 메소드 추가 */
 	private String resolveToken(HttpServletRequest request) {
 		String bearerToken=request.getHeader(AUTHORIZATION_HEADER);
 		if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {

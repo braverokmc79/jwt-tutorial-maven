@@ -50,7 +50,7 @@ public class User {
 	
 	@JsonIgnore
 	@Column(name="activated")
-	private boolean activtated;
+	private boolean activated;
 	
 	
 	@ManyToMany

@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -24,22 +25,12 @@ import me.slivernine.tutorial.jwt.TokenProvider;
 @EnableWebSecurity
 @AllArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true) //메소드 단위로 사용하기 위해 추가
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
+public class SecurityConfig {
 	
 	private final TokenProvider tokenProvider;
 	private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-	
-//	public SecurityConfig(
-//			TokenProvider tokenProvider,
-//			JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-//			JwtAccessDeniedHandler jwtAccessDeniedHandler
-//			) {
-//		this.tokenProvider=tokenProvider;
-//		this.jwtAuthenticationEntryPoint=jwtAuthenticationEntryPoint;
-//		this.jwtAccessDeniedHandler=jwtAccessDeniedHandler;
-//	}
-	
+
 	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder(){
@@ -47,14 +38,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	}
 	
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {		
+//	@Override
+//	protected void configure(HttpSecurity http) throws Exception {		
+
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+			
 		http			
 			.csrf().disable()  //1.토큰을 사용해서 인증 처리하기때문에 csrf 설정이 disable 
 
 			.exceptionHandling()
-			.authenticationEntryPoint(jwtAuthenticationEntryPoint)
-			.accessDeniedHandler(jwtAccessDeniedHandler)
+			.authenticationEntryPoint(jwtAuthenticationEntryPoint) //자격증명을 제공하지 않고 접근하려 할때 401 Unauthorized 에러를 리턴
+			.accessDeniedHandler(jwtAccessDeniedHandler)  // 403 Forbidden 에러
 			
 			.and().headers().frameOptions().sameOrigin() //2. iframe 동일한 도메인 허용
 		
@@ -74,8 +69,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.and()
 			.apply(new JwtSecurityConfig(tokenProvider));
 				
+		return http.build();
 	}
-
 
 	
 	
